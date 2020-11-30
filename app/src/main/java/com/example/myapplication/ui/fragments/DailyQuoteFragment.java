@@ -10,23 +10,14 @@ import android.view.ViewGroup;
 
 import com.example.myapplication.R;
 
-public class DailyQuoteFragment extends Fragment {
-
-    public DailyQuoteFragment() {
-
-    }
-
+public class DailyQuoteFragment extends BaseFragment {
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
+    protected void onFragmentCreated(View view, Bundle savedInstance) {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-        return inflater.inflate(R.layout.fragment_daily_quote, container, false);
+    protected int getLayoutRes() {
+        return R.layout.fragment_daily_quote;
     }
 }

@@ -10,21 +10,17 @@ import android.view.ViewGroup;
 
 import com.example.myapplication.R;
 
-public class MyQuotesFragment extends Fragment {
+public class MyQuotesFragment extends BaseFragment {
 
     public MyQuotesFragment() {
-
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
+    protected void onFragmentCreated(View view, Bundle savedInstance) {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_my_quotes, container, false);
+    protected int getLayoutRes() {
+        return R.layout.fragment_my_quotes;
     }
 }
