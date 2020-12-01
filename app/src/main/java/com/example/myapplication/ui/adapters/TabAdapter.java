@@ -14,23 +14,22 @@ import javax.inject.Inject;
 
 public class TabAdapter extends FragmentStateAdapter {
 
-    private DailyQuoteFragment dailyQuoteFragment;
-    private MyQuotesFragment myQuotesFragment;
-
     @Inject
-    public TabAdapter(FragmentManager fragmentManager, Lifecycle lifecycle, MyQuotesFragment myQuotesFragment, DailyQuoteFragment dailyQuoteFragment) {
+    DailyQuoteFragment dailyQuoteFragment;
+    @Inject
+    MyQuotesFragment myQuotesFragment;
+
+    public TabAdapter(FragmentManager fragmentManager, Lifecycle lifecycle) {
         super(fragmentManager, lifecycle);
-        this.dailyQuoteFragment = dailyQuoteFragment;
-        this.myQuotesFragment = myQuotesFragment;
     }
 
     @NonNull
     @Override
     public Fragment createFragment(int position) {
         switch (position) {
-            case 1:
+            case 0:
                 return dailyQuoteFragment;
-            case 2:
+            case 1:
                 return myQuotesFragment;
             default:
                 throw new IllegalArgumentException("Unavailable tab");
