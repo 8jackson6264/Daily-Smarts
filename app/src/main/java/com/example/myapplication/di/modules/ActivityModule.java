@@ -1,4 +1,12 @@
 package com.example.myapplication.di.modules;
 
-public class ActivivtyModule {
+import com.example.myapplication.ui.activities.MainActivity;
+
+import dagger.Module;
+import dagger.android.ContributesAndroidInjector;
+
+@Module
+public abstract class ActivityModule {
+    @ContributesAndroidInjector
+    abstract MainActivity bindMainActivity();
 }
