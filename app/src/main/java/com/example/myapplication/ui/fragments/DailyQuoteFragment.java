@@ -10,7 +10,13 @@ import android.view.ViewGroup;
 
 import com.example.myapplication.R;
 
+import javax.inject.Inject;
+
 public class DailyQuoteFragment extends BaseFragment {
+
+    @Inject
+    public DailyQuoteFragment() {
+    }
 
     @Override
     protected void onFragmentCreated(View view, Bundle savedInstance) {
