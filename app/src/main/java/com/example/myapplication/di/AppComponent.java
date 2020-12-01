@@ -5,11 +5,21 @@ import com.example.myapplication.di.modules.FragmentsModule;
 
 import javax.inject.Singleton;
 
+import dagger.BindsInstance;
 import dagger.Component;
 
 @Singleton
 @Component(modules = {FragmentsModule.class})
 public interface AppComponent {
     void inject(DailySmartsApp dailySmartsApp);
-    
+
+    @Component.Builder
+    interface Builder {
+
+        @BindsInstance
+        Builder applicationBind (DailySmartsApp dailySmartsApp);
+
+        AppComponent build();
+    }
+
 }
