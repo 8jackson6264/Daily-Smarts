@@ -14,13 +14,17 @@ import javax.inject.Inject;
 
 public class TabAdapter extends FragmentStateAdapter {
 
-    @Inject
-    DailyQuoteFragment dailyQuoteFragment;
-    @Inject
-    MyQuotesFragment myQuotesFragment;
+    private DailyQuoteFragment dailyQuoteFragment;
+    private MyQuotesFragment myQuotesFragment;
 
-    public TabAdapter(FragmentManager fragmentManager, Lifecycle lifecycle) {
+    @Inject
+    public TabAdapter(FragmentManager fragmentManager,
+                      Lifecycle lifecycle,
+                      DailyQuoteFragment dailyQuoteFragment,
+                      MyQuotesFragment myQuotesFragment) {
         super(fragmentManager, lifecycle);
+        this.dailyQuoteFragment = dailyQuoteFragment;
+        this.myQuotesFragment = myQuotesFragment;
     }
 
     @NonNull
