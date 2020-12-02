@@ -10,8 +10,11 @@ import android.view.ViewGroup;
 
 import com.example.myapplication.R;
 
+import javax.inject.Inject;
+
 public class MyQuotesFragment extends BaseFragment {
 
+    @Inject
     public MyQuotesFragment() {
     }
 

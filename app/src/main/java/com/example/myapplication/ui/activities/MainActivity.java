@@ -1,16 +1,22 @@
 package com.example.myapplication.ui.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
-
-import android.os.Bundle;
-
 import com.example.myapplication.R;
+import com.example.myapplication.ui.fragments.DailyQuoteFragment;
+import com.example.myapplication.ui.fragments.MyQuotesFragment;
+import javax.inject.Inject;
 import com.example.myapplication.ui.adapters.TabAdapter;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 public class MainActivity extends BaseActivity {
+
+    @Inject
+    DailyQuoteFragment dailyQuoteFragment;
+
+    @Inject
+    MyQuotesFragment myQuotesFragment;
+
 
     @Override
     protected void onViewCreated() {
