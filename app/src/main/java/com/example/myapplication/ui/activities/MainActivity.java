@@ -1,5 +1,6 @@
 package com.example.myapplication.ui.activities;
 
+import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.myapplication.R;
@@ -37,17 +38,20 @@ public class MainActivity extends BaseActivity {
         ViewPager2 viewPager2 = findViewById(R.id.viewpager);
         viewPager2.setAdapter(tabAdapter);
         viewPager2.setUserInputEnabled(false);
-        TabLayoutMediator mediator = new TabLayoutMediator(tabLayout, viewPager2, (tab, position) -> {
-            switch (position) {
-                case 0:
-                    tab.setText("DailyQuotes"); break;
-                case 1:
-                    tab.setText("MyQuotes"); break;
-                default:
-                    throw new IllegalArgumentException("unavailable tab");
-            }
-        });
+        TabLayoutMediator mediator = new TabLayoutMediator(tabLayout, viewPager2,
+                this::setTextToTheTabLayoutDependingOnThePosition);
         mediator.attach();
+    }
+
+    private void setTextToTheTabLayoutDependingOnThePosition(TabLayout.Tab tab, int position){
+        switch (position) {
+            case 0:
+                tab.setText("DailyQuotes"); break;
+            case 1:
+                tab.setText("MyQuotes"); break;
+            default:
+                throw new IllegalArgumentException("unavailable tab");
+        }
     }
 
 
