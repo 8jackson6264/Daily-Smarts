@@ -12,7 +12,7 @@ import androidx.databinding.ViewDataBinding;
 
 import dagger.android.support.DaggerFragment;
 
-public abstract class BaseFragment<T extends ViewDataBinding, L> extends DaggerFragment {
+public abstract class BaseFragment<T extends ViewDataBinding> extends DaggerFragment {
 
     public final static String TAG = BaseFragment.class.getSimpleName();
 

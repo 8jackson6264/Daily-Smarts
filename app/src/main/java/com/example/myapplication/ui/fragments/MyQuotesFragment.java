@@ -9,10 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.myapplication.R;
+import com.example.myapplication.databinding.FragmentMyQuotesBinding;
 
 import javax.inject.Inject;
 
-public class MyQuotesFragment extends BaseFragment {
+public class MyQuotesFragment extends BaseFragment <FragmentMyQuotesBinding>{
 
     @Inject
     public MyQuotesFragment() {
