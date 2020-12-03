@@ -9,10 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.myapplication.R;
+import com.example.myapplication.databinding.FragmentDailyQuoteBinding;
 
 import javax.inject.Inject;
 
-public class DailyQuoteFragment extends BaseFragment {
+public class DailyQuoteFragment extends BaseFragment<FragmentDailyQuoteBinding> {
 
     @Inject
     public DailyQuoteFragment() {

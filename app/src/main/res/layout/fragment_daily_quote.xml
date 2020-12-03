@@ -19,8 +19,10 @@
             <TextView
                 android:id="@+id/txt_quote"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="wrap_content"
                 android:layout_margin="6dp"
+                android:textColor="@color/black"
+
                 android:text="Quote"
                 android:textSize="80sp"
                 android:visibility="visible"
@@ -35,6 +37,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="6dp"
                 android:text="@string/author"
+                android:textColor="@color/black"
                 android:textSize="40sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/txt_quote"
