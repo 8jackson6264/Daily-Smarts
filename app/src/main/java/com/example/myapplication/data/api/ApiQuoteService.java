@@ -7,8 +7,8 @@ import retrofit2.http.GET;
 
 public interface ApiQuoteService {
     @GET("/api/1.0/?method=getQuote&format=json&lang=en")
-    Call<Quote> getRandomEngQuote();
+    Call<Quote> getRandomEnglishQuote();
 
     @GET("/api/1.0/?method=getQuote&format=json&lang=ru")
-    Call<Quote> getRandomRusQuote();
+    Call<Quote> getRandomRussianQuote();
 }

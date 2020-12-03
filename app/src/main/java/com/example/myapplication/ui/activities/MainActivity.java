@@ -1,9 +1,12 @@
 package com.example.myapplication.ui.activities;
 
+import android.widget.TextView;
+
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.myapplication.R;
+import com.example.myapplication.data.api.Api;
 import com.example.myapplication.ui.fragments.DailyQuoteFragment;
 import com.example.myapplication.ui.fragments.MyQuotesFragment;
 
@@ -53,6 +56,7 @@ public class MainActivity extends BaseActivity {
                 throw new IllegalArgumentException("unavailable tab");
         }
     }
+
 
 
 }
