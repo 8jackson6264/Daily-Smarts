@@ -35,21 +35,25 @@ public class MyQuotesFragment extends BaseFragment <FragmentMyQuotesBinding>{
     @Override
     protected void onFragmentCreated(View view, Bundle savedInstance) {
         quoteDatabaseService = new QuoteDatabaseService(getContext());
+        setRecycleView();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        binding.quoteRecycle.setLayoutManager(
-                new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        myQuotesAdapter = new MyQuotesAdapter();
-        binding.quoteRecycle.setAdapter(myQuotesAdapter);
         quoteDatabaseService.getAllQuotes(data -> myQuotesAdapter.setQuotesList(data));
     }
 
     @Override
     protected int getLayoutRes() {
         return R.layout.fragment_my_quotes;
+    }
+
+    private void setRecycleView(){
+        binding.quoteRecycle.setLayoutManager(
+                new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        myQuotesAdapter = new MyQuotesAdapter();
+        binding.quoteRecycle.setAdapter(myQuotesAdapter);
     }
 
 }

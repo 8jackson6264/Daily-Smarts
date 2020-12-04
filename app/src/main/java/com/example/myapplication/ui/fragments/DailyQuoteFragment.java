@@ -1,5 +1,6 @@
 package com.example.myapplication.ui.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -71,6 +72,7 @@ public class DailyQuoteFragment extends BaseFragment<FragmentDailyQuoteBinding> 
             @Override
             public void onQuoteReceived(String quote, String author) {
                 binding.txtQuote.setText(quote);
+                binding.btnSave.setImageDrawable(getContext().getDrawable(R.drawable.heart_empty));
                 if (author != "") {
                     binding.txtAuthor.setText("-" + author);
                 } else binding.txtAuthor.setText("unknown");
@@ -88,6 +90,19 @@ public class DailyQuoteFragment extends BaseFragment<FragmentDailyQuoteBinding> 
             @Override
             public void onClick(View v) {
                 saveQuote();
+            }
+        });
+        binding.btnShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT,
+                        binding.txtQuote.getText().toString() + "\n" + binding.txtAuthor.getText().toString());
+                sendIntent.setType("text/plain");
+
+                Intent shareIntent = Intent.createChooser(sendIntent, null);
+                startActivity(shareIntent);
             }
         });
     }

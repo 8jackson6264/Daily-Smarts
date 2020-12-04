@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
 import com.example.myapplication.data.Quote;
+import com.example.myapplication.data.database.QuoteDatabaseService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +19,8 @@ import java.util.List;
 public class MyQuotesAdapter extends RecyclerView.Adapter<MyQuotesAdapter.ViewHolder>{
 
     List<Quote> quotesList;
+
+    QuoteDatabaseService quoteDatabaseService;
 
     public MyQuotesAdapter() {
         this.quotesList = new ArrayList<>();
@@ -30,6 +33,7 @@ public class MyQuotesAdapter extends RecyclerView.Adapter<MyQuotesAdapter.ViewHo
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_quote,
                 parent,
                 false);
+        this.quoteDatabaseService = new QuoteDatabaseService(parent.getContext());
         return new ViewHolder(itemView);
     }
 
@@ -37,6 +41,7 @@ public class MyQuotesAdapter extends RecyclerView.Adapter<MyQuotesAdapter.ViewHo
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.txtAuthor.setText(quotesList.get(position).quoteAuthor);
         holder.txtQuote.setText(quotesList.get(position).quoteText);
+        holder.btnSave.setOnClickListener(v -> deleteQuote(quotesList.get(position)));
     }
 
     @Override
@@ -48,6 +53,13 @@ public class MyQuotesAdapter extends RecyclerView.Adapter<MyQuotesAdapter.ViewHo
         this.quotesList = quotesList;
         notifyDataSetChanged();
     }
+
+    private void deleteQuote(Quote quote){
+        quoteDatabaseService.deleteQuote(quote);
+        quotesList.remove(quote);
+        notifyDataSetChanged();
+    }
+
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
