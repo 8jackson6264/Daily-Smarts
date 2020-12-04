@@ -8,6 +8,8 @@ public interface DailyQuoteFragmentContract {
 
     interface PresenterListener {
         void setViewListener(ViewListener viewListener);
+
+        void onRefreshButtonClicked();
     }
 }
 
