@@ -12,6 +12,11 @@ public class DailyQuoteFragmentPresenter implements DailyQuoteFragmentContract.P
     }
 
     @Override
+    public void onSaveButtonClicked() {
+        viewListener.saveQuote();
+    }
+
+    @Override
     public void onRefreshButtonClicked() {
         viewListener.getAndSetNewQuote();
     }

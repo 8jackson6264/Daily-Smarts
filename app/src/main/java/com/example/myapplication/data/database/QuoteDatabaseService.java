@@ -55,7 +55,23 @@ public class QuoteDatabaseService {
         }.execute();
     }
 
+    public void ifExists(DataListener<Boolean> dataListener, String quote) {
+
+        new AsyncTask<Void, Void, Boolean>() {
+            @Override
+            protected Boolean doInBackground(Void... voids) {
+                return quoteDAO.checkIfItExist(quote);
+            }
+
+            @Override
+            protected void onPostExecute(Boolean ifExists) {
+                dataListener.onData(ifExists);
+            }
+        }.execute();
+    }
+
     public interface DataListener<T> {
         void onData(T data);
     }
+
 }
