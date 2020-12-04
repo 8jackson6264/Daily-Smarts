@@ -67,6 +67,7 @@ public class DailyQuoteFragment extends BaseFragment<FragmentDailyQuoteBinding> 
 
     @Override
     public void getAndSetNewQuote() {
+        binding.btnSave.setImageDrawable(getContext().getDrawable(R.drawable.heart_empty));
         Api.getInstance().getRandomEnglishQuote(new Api.ApiListener() {
             @Override
             public void onQuoteReceived(String quote, String author) {
