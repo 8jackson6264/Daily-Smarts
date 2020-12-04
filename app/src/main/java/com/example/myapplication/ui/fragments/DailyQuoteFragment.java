@@ -31,15 +31,15 @@ public class DailyQuoteFragment extends BaseFragment<FragmentDailyQuoteBinding> 
         return R.layout.fragment_daily_quote;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        return super.onOptionsItemSelected(item);
-        if (item.getItemId() == R.id.refresh) {
-            presenterListener.onRefreshButtonClicked();
-            reload();
-            return true;
-        }
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+//        return super.onOptionsItemSelected(item);
+//        if (item.getItemId() == R.id.refresh) {
+//            presenterListener.onRefreshButtonClicked();
+//            reload();
+//            return true;
+//        }
+//    }
 
     private void reload() {
 
