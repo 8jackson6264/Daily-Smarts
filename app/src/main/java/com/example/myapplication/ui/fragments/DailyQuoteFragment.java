@@ -9,8 +9,10 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.myapplication.R;
+import com.example.myapplication.data.api.Api;
 import com.example.myapplication.databinding.FragmentDailyQuoteBinding;
 
 import javax.inject.Inject;
@@ -23,7 +25,10 @@ public class DailyQuoteFragment extends BaseFragment<FragmentDailyQuoteBinding> 
 
     @Override
     protected void onFragmentCreated(View view, Bundle savedInstance) {
+
        setHasOptionsMenu(true);
+
+     
     }
 
     @Override
