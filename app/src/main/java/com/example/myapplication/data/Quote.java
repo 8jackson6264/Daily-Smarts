@@ -9,10 +9,10 @@ public class Quote {
     @PrimaryKey(autoGenerate = true)
     public int id;
 
-    @ColumnInfo(name = "quote")
+    @ColumnInfo(name = "quote_text")
     public String quoteText;
 
-    @ColumnInfo(name = "author")
+    @ColumnInfo(name = "author_text")
     public String quoteAuthor;
 
     public Quote() {

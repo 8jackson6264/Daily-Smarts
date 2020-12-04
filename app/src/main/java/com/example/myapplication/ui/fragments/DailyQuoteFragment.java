@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.myapplication.R;
 import com.example.myapplication.core.contracts.DailyQuoteFragmentContract;
+import com.example.myapplication.data.Quote;
 import com.example.myapplication.data.api.Api;
 import com.example.myapplication.data.database.QuoteDatabaseService;
 import com.example.myapplication.databinding.FragmentDailyQuoteBinding;
@@ -23,7 +24,7 @@ public class DailyQuoteFragment extends BaseFragment<FragmentDailyQuoteBinding> 
     @Inject
     DailyQuoteFragmentContract.PresenterListener presenterListener;
     @Inject
-    QuoteDatabaseService dbService;
+    QuoteDatabaseService databaseService;
 
     @Inject
     public DailyQuoteFragment() {
@@ -33,6 +34,8 @@ public class DailyQuoteFragment extends BaseFragment<FragmentDailyQuoteBinding> 
     protected void onFragmentCreated(View view, Bundle savedInstance) {
         setHasOptionsMenu(true);
         presenterListener.setViewListener(this);
+        setOnClickListeners();
+
     }
 
     @Override
@@ -55,12 +58,22 @@ public class DailyQuoteFragment extends BaseFragment<FragmentDailyQuoteBinding> 
     }
 
     @Override
+    public void saveQuote() {
+        Quote quote = new Quote(binding.txtQuote.getText().toString(), binding.txtAuthor.getText().toString());
+
+        databaseService.addQuote(quote);
+        binding.btnSave.setImageDrawable(getContext().getDrawable(R.drawable.heart_clicked));
+    }
+
+    @Override
     public void getAndSetNewQuote() {
         Api.getInstance().getRandomEnglishQuote(new Api.ApiListener() {
             @Override
             public void onQuoteReceived(String quote, String author) {
                 binding.txtQuote.setText(quote);
-                binding.txtAuthor.setText("-" + author);
+                if (author != "") {
+                    binding.txtAuthor.setText("-" + author);
+                } else binding.txtAuthor.setText("unknown");
             }
 
             @Override
@@ -69,4 +82,14 @@ public class DailyQuoteFragment extends BaseFragment<FragmentDailyQuoteBinding> 
             }
         });
     }
+
+    void setOnClickListeners (){
+        binding.btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveQuote();
+            }
+        });
+    }
+
 }
