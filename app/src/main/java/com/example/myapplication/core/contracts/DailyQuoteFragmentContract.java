@@ -4,10 +4,14 @@ public interface DailyQuoteFragmentContract {
 
     interface ViewListener {
 
+        void getAndSetNewQuote();
+
     }
 
     interface PresenterListener {
         void setViewListener(ViewListener viewListener);
+
+        void onRefreshButtonClicked();
     }
 }
 
