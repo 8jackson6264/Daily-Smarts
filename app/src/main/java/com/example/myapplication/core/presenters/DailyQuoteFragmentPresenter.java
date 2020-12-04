@@ -10,4 +10,9 @@ public class DailyQuoteFragmentPresenter implements DailyQuoteFragmentContract.P
     public void setViewListener(DailyQuoteFragmentContract.ViewListener viewListener) {
         this.viewListener = viewListener;
     }
+
+    @Override
+    public void onRefreshButtonClicked() {
+        viewListener.getAndSetNewQuote();
+    }
 }

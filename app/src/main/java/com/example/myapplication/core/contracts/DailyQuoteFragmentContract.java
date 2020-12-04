@@ -4,6 +4,8 @@ public interface DailyQuoteFragmentContract {
 
     interface ViewListener {
 
+        void getAndSetNewQuote();
+
     }
 
     interface PresenterListener {
