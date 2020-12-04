@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.myapplication.R;
 import com.example.myapplication.core.contracts.DailyQuoteFragmentContract;
+import com.example.myapplication.data.Quote;
 import com.example.myapplication.data.api.Api;
 import com.example.myapplication.data.database.QuoteDatabaseService;
 import com.example.myapplication.databinding.FragmentDailyQuoteBinding;
@@ -23,7 +24,7 @@ public class DailyQuoteFragment extends BaseFragment<FragmentDailyQuoteBinding> 
     @Inject
     DailyQuoteFragmentContract.PresenterListener presenterListener;
     @Inject
-    QuoteDatabaseService dbService;
+    QuoteDatabaseService quoteDatabaseService;
 
     @Inject
     public DailyQuoteFragment() {
@@ -33,6 +34,7 @@ public class DailyQuoteFragment extends BaseFragment<FragmentDailyQuoteBinding> 
     protected void onFragmentCreated(View view, Bundle savedInstance) {
         setHasOptionsMenu(true);
         presenterListener.setViewListener(this);
+        setOnClickListener();
     }
 
     @Override
@@ -68,5 +70,23 @@ public class DailyQuoteFragment extends BaseFragment<FragmentDailyQuoteBinding> 
                 Toast.makeText(getContext(), "Some error occurred", Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    @Override
+    public void saveQuote() {
+        Quote quote = new Quote(binding.txtQuote.getText().toString(), binding.txtAuthor.getText().toString());
+        quoteDatabaseService.addQuote(quote);
+        binding.btnSave.setBackgroundResource(R.drawable.heart_clicked);
+
+    }
+
+    void setOnClickListener() {
+        binding.btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveQuote();
+            }
+        });
+
     }
 }

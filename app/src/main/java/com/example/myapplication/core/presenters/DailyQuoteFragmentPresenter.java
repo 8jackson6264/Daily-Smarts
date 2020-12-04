@@ -6,9 +6,16 @@ public class DailyQuoteFragmentPresenter implements DailyQuoteFragmentContract.P
 
     DailyQuoteFragmentContract.ViewListener viewListener;
 
+
     @Override
     public void setViewListener(DailyQuoteFragmentContract.ViewListener viewListener) {
         this.viewListener = viewListener;
+
+    }
+
+    @Override
+    public void onSaveButtonClicked() {
+        viewListener.saveQuote();
     }
 
     @Override

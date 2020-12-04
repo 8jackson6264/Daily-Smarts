@@ -6,10 +6,14 @@ public interface DailyQuoteFragmentContract {
 
         void getAndSetNewQuote();
 
+        void saveQuote();
+
     }
 
     interface PresenterListener {
         void setViewListener(ViewListener viewListener);
+
+        void onSaveButtonClicked();
 
         void onRefreshButtonClicked();
     }
