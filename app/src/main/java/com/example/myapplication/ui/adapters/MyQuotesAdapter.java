@@ -46,6 +46,7 @@ public class MyQuotesAdapter extends RecyclerView.Adapter<MyQuotesAdapter.ViewHo
 
     public void setQuotesList(List<Quote> quotesList) {
         this.quotesList = quotesList;
+        notifyDataSetChanged();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
