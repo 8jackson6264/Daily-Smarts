@@ -1,6 +1,8 @@
 package com.example.myapplication.ui.fragments;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -22,12 +24,21 @@ import javax.inject.Inject;
 
 public class DailyQuoteFragment extends BaseFragment<FragmentDailyQuoteBinding> implements DailyQuoteFragmentContract.ViewListener {
 
+    SharedPreferences sharedPreferences;
+    public static final String myPreference = "myPref";
+    public static final String EngQuoteText = "engQuoteTextKey";
+    public static final String EngQuoteAuthor = "engQuoteAuthorKey";
+    public static final String RusQuoteText = "rusQuoteTextKey";
+    public static final String RusQuoteAuthor = "rusQuoteAuthorKey";
+
     @Inject
     DailyQuoteFragmentContract.PresenterListener presenterListener;
     @Inject
     QuoteDatabaseService databaseService;
 
     private boolean ifQuoteIsAlreadySaved = false;
+
+    private boolean isLangEng = true;
 
     @Inject
     public DailyQuoteFragment() {
@@ -38,6 +49,11 @@ public class DailyQuoteFragment extends BaseFragment<FragmentDailyQuoteBinding> 
         setHasOptionsMenu(true);
         presenterListener.setViewListener(this);
         setOnClickListeners();
+        sharedPreferences = getActivity().getSharedPreferences(myPreference, Context.MODE_PRIVATE);
+        if (sharedPreferences.contains(EngQuoteText)){
+            binding.txtQuote.setText(sharedPreferences.getString(EngQuoteText, ""));
+            binding.txtAuthor.setText(sharedPreferences.getString(EngQuoteAuthor, ""));
+        } else getAndSetNewEngQuote();
 
     }
 
@@ -56,6 +72,9 @@ public class DailyQuoteFragment extends BaseFragment<FragmentDailyQuoteBinding> 
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.refresh) {
             presenterListener.onRefreshButtonClicked();
+        }
+        if (item.getItemId() == R.id.lang_change){
+          presenterListener.onChangeLangButtonClicked();
         }
         return true;
     }
@@ -79,6 +98,12 @@ public class DailyQuoteFragment extends BaseFragment<FragmentDailyQuoteBinding> 
     }
 
     @Override
+    public void changeLang() {
+        isLangEng = !isLangEng;
+        
+    }
+
+    @Override
     public void saveOrDeleteQuote() {
         if (ifQuoteIsAlreadySaved) {
             databaseService.deleteQuoteByQuoteText(binding.txtQuote.getText().toString());
@@ -94,7 +119,7 @@ public class DailyQuoteFragment extends BaseFragment<FragmentDailyQuoteBinding> 
     }
 
     @Override
-    public void getAndSetNewQuote() {
+    public void getAndSetNewEngQuote() {
         Api.getInstance().getRandomEnglishQuote(new Api.ApiListener() {
             @Override
             public void onQuoteReceived(String quote, String author) {
@@ -103,6 +128,10 @@ public class DailyQuoteFragment extends BaseFragment<FragmentDailyQuoteBinding> 
                 if (author != "") {
                     binding.txtAuthor.setText(author);
                 } else binding.txtAuthor.setText("unknown");
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString(EngQuoteText, quote);
+                editor.putString(EngQuoteAuthor, author);
+                editor.apply();
             }
 
             @Override

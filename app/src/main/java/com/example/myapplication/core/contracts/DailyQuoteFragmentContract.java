@@ -4,9 +4,9 @@ public interface DailyQuoteFragmentContract {
 
     interface ViewListener {
         void saveOrDeleteQuote();
-        void getAndSetNewQuote();
+        void getAndSetNewEngQuote();
         void shareQuote();
-
+        void changeLang();
     }
 
     interface PresenterListener {
@@ -14,6 +14,7 @@ public interface DailyQuoteFragmentContract {
         void onSaveButtonClicked();
         void onRefreshButtonClicked();
         void onShareButtonClicked();
+        void onChangeLangButtonClicked();
     }
 }
 

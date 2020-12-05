@@ -18,11 +18,16 @@ public class DailyQuoteFragmentPresenter implements DailyQuoteFragmentContract.P
 
     @Override
     public void onRefreshButtonClicked() {
-        viewListener.getAndSetNewQuote();
+        viewListener.getAndSetNewEngQuote();
     }
 
     @Override
     public void onShareButtonClicked() {
         viewListener.shareQuote();
+    }
+
+    @Override
+    public void onChangeLangButtonClicked() {
+        viewListener.changeLang();
     }
 }
