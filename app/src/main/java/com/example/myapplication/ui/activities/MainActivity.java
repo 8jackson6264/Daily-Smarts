@@ -77,9 +77,9 @@ public class MainActivity extends BaseActivity {
     private void setTextToTheTabLayoutDependingOnThePosition(TabLayout.Tab tab, int position){
         switch (position) {
             case 0:
-                tab.setText("DailyQuotes"); break;
+                tab.setText("Daily Quote"); break;
             case 1:
-                tab.setText("MyQuotes"); break;
+                tab.setText("My Quotes"); break;
             default:
                 throw new IllegalArgumentException("unavailable tab");
         }
