@@ -158,7 +158,7 @@ public class DailyQuoteFragment extends BaseFragment<FragmentDailyQuoteBinding> 
     public void getAndSetNewQuote() {
         if (isLangEng) {
             getAndSetNewEngQuote();
-        } else if (!isLangEng){
+        } else {
             getAndSetNewRusQuote();
         }
 
@@ -204,21 +204,22 @@ public class DailyQuoteFragment extends BaseFragment<FragmentDailyQuoteBinding> 
         ifQuoteIsAlreadySaved = ifExists;
     }
 
-    private void getFirstQuote(){
+    private void getFirstQuote() {
         if (sharedPreferences.contains(EngQuoteText)) {
             binding.txtQuote.setText(sharedPreferences.getString(EngQuoteText, ""));
             binding.txtAuthor.setText(sharedPreferences.getString(EngQuoteAuthor, ""));
         } else getAndSetNewEngQuote();
     }
+
     private String getDate() {
         Date c = Calendar.getInstance().getTime();
         SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
         return df.format(c);
     }
 
-    private void DateChecker(){
-        if (sharedPreferences.contains(LastSingedDate)){
-            if (!getDate().equals(sharedPreferences.getString(LastSingedDate, ""))){
+    private void DateChecker() {
+        if (sharedPreferences.contains(LastSingedDate)) {
+            if (!getDate().equals(sharedPreferences.getString(LastSingedDate, ""))) {
                 getAndSetNewQuote();
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putString(LastSingedDate, getDate());
