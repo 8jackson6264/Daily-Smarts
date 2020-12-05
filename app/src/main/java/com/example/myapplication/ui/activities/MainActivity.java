@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -32,7 +33,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void onViewCreated() {
-        if(!isNetworkConnected()){
+        if (!isNetworkConnected()) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage("Check your internet connection and try again")
                     .setTitle("Not connected").setPositiveButton("Retry", new DialogInterface.OnClickListener() {
@@ -43,14 +44,13 @@ public class MainActivity extends BaseActivity {
             });
             AlertDialog dialog = builder.create();
             dialog.show();
-        }
-        else {
+        } else {
             managingFragments();
             SwipeRefreshLayout pullToRefresh = findViewById(R.id.swipeRefresh);
             pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                 @Override
                 public void onRefresh() {
-                    onRefresh();
+                    refreshData();
                     pullToRefresh.setRefreshing(false);
                 }
             });
@@ -74,12 +74,14 @@ public class MainActivity extends BaseActivity {
         mediator.attach();
     }
 
-    private void setTextToTheTabLayoutDependingOnThePosition(TabLayout.Tab tab, int position){
+    private void setTextToTheTabLayoutDependingOnThePosition(TabLayout.Tab tab, int position) {
         switch (position) {
             case 0:
-                tab.setText("Daily Quote"); break;
+                tab.setText("Daily Quote");
+                break;
             case 1:
-                tab.setText("My Quotes"); break;
+                tab.setText("My Quotes");
+                break;
             default:
                 throw new IllegalArgumentException("unavailable tab");
         }
@@ -88,7 +90,12 @@ public class MainActivity extends BaseActivity {
     private boolean isNetworkConnected() {
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();    }
+        return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
+    }
+
+    private void refreshData() {
+        dailyQuoteFragment.getAndSetNewQuote();
+    }
 
 
 }

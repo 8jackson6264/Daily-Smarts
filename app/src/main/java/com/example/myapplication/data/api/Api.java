@@ -4,6 +4,7 @@ import android.widget.TextView;
 
 import com.example.myapplication.R;
 import com.example.myapplication.data.Quote;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -69,6 +70,4 @@ public class Api {
 
         void onFailure();
     }
-
-
 }

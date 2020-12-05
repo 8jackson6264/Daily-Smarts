@@ -146,7 +146,6 @@ public class DailyQuoteFragment extends BaseFragment<FragmentDailyQuoteBinding> 
             ifQuoteIsAlreadySaved = false;
             binding.btnSave.setImageDrawable(getContext().getDrawable(R.drawable.heart_empty));
         } else {
-
             Quote quote = new Quote(binding.txtQuote.getText().toString(), binding.txtAuthor.getText().toString());
             databaseService.addQuote(quote);
             binding.btnSave.setImageDrawable(getContext().getDrawable(R.drawable.heart_clicked));
@@ -161,7 +160,7 @@ public class DailyQuoteFragment extends BaseFragment<FragmentDailyQuoteBinding> 
         } else {
             getAndSetNewRusQuote();
         }
-
+        Toast.makeText(getContext(), "New Quotes have been generated", Toast.LENGTH_SHORT).show();
     }
 
     public void getAndSetNewEngQuote() {

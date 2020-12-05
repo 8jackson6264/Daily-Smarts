@@ -31,6 +31,7 @@ public abstract class BaseFragment<T extends ViewDataBinding> extends DaggerFrag
         onFragmentCreated(view, savedInstanceState);
     }
 
-    protected abstract void onFragmentCreated (View view, Bundle savedInstance);
+    protected abstract void onFragmentCreated(View view, Bundle savedInstance);
+
     protected abstract int getLayoutRes();
 }

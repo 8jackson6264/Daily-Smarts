@@ -22,7 +22,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-public class MyQuotesFragment extends BaseFragment <FragmentMyQuotesBinding>{
+public class MyQuotesFragment extends BaseFragment<FragmentMyQuotesBinding> {
 
     private MyQuotesAdapter myQuotesAdapter;
     @Inject
@@ -49,7 +49,7 @@ public class MyQuotesFragment extends BaseFragment <FragmentMyQuotesBinding>{
         return R.layout.fragment_my_quotes;
     }
 
-    private void setRecycleView(){
+    private void setRecycleView() {
         binding.quoteRecycle.setLayoutManager(
                 new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         myQuotesAdapter = new MyQuotesAdapter();
