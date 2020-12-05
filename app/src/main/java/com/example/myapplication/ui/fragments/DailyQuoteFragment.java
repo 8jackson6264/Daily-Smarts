@@ -74,7 +74,7 @@ public class DailyQuoteFragment extends BaseFragment<FragmentDailyQuoteBinding> 
                 binding.txtQuote.setText(quote);
                 binding.btnSave.setImageDrawable(getContext().getDrawable(R.drawable.heart_empty));
                 if (author != "") {
-                    binding.txtAuthor.setText("-" + author);
+                    binding.txtAuthor.setText(author);
                 } else binding.txtAuthor.setText("unknown");
             }
 

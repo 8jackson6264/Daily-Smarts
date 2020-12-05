@@ -1,5 +1,8 @@
 package com.example.myapplication.ui.adapters;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,11 +19,13 @@ import com.example.myapplication.data.database.QuoteDatabaseService;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyQuotesAdapter extends RecyclerView.Adapter<MyQuotesAdapter.ViewHolder>{
+public class MyQuotesAdapter extends RecyclerView.Adapter<MyQuotesAdapter.ViewHolder> {
 
     List<Quote> quotesList;
 
     QuoteDatabaseService quoteDatabaseService;
+
+    Context context;
 
     public MyQuotesAdapter() {
         this.quotesList = new ArrayList<>();
@@ -34,6 +39,7 @@ public class MyQuotesAdapter extends RecyclerView.Adapter<MyQuotesAdapter.ViewHo
                 parent,
                 false);
         this.quoteDatabaseService = new QuoteDatabaseService(parent.getContext());
+        this.context = parent.getContext();
         return new ViewHolder(itemView);
     }
 
@@ -42,6 +48,17 @@ public class MyQuotesAdapter extends RecyclerView.Adapter<MyQuotesAdapter.ViewHo
         holder.txtAuthor.setText(quotesList.get(position).quoteAuthor);
         holder.txtQuote.setText(quotesList.get(position).quoteText);
         holder.btnSave.setOnClickListener(v -> deleteQuote(quotesList.get(position)));
+        holder.btnShare.setOnClickListener(v -> shareQuote(quotesList.get(position)));
+    }
+
+    private void shareQuote(Quote quote) {
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, quote.getQuoteText() + "\n" + quote.getQuoteAuthor());
+        sendIntent.setType("text/plain");
+
+        Intent shareIntent = Intent.createChooser(sendIntent, null);
+        context.startActivity(shareIntent);
     }
 
     @Override
@@ -54,7 +71,7 @@ public class MyQuotesAdapter extends RecyclerView.Adapter<MyQuotesAdapter.ViewHo
         notifyDataSetChanged();
     }
 
-    private void deleteQuote(Quote quote){
+    private void deleteQuote(Quote quote) {
         quoteDatabaseService.deleteQuote(quote);
         quotesList.remove(quote);
         notifyDataSetChanged();
