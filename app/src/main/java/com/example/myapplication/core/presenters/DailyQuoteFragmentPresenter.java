@@ -18,7 +18,7 @@ public class DailyQuoteFragmentPresenter implements DailyQuoteFragmentContract.P
 
     @Override
     public void onRefreshButtonClicked() {
-        viewListener.getAndSetNewEngQuote();
+        viewListener.getAndSetNewQuote();
     }
 
     @Override
