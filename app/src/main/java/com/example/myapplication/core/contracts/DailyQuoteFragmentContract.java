@@ -3,6 +3,7 @@ package com.example.myapplication.core.contracts;
 public interface DailyQuoteFragmentContract {
 
     interface ViewListener {
+
         void saveOrDeleteQuote();
 
         void getAndSetNewQuote();
@@ -13,6 +14,7 @@ public interface DailyQuoteFragmentContract {
     }
 
     interface PresenterListener {
+
         void setViewListener(ViewListener viewListener);
 
         void onSaveButtonClicked();
