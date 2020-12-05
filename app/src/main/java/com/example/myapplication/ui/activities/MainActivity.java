@@ -1,8 +1,14 @@
 package com.example.myapplication.ui.activities;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.myapplication.R;
@@ -26,7 +32,29 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void onViewCreated() {
-        managingFragments();
+        if(!isNetworkConnected()){
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Check your internet connection and try again")
+                    .setTitle("Not connected").setPositiveButton("Retry", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    recreate();
+                }
+            });
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        }
+        else {
+            managingFragments();
+            SwipeRefreshLayout pullToRefresh = findViewById(R.id.swipeRefresh);
+            pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    onRefresh();
+                    pullToRefresh.setRefreshing(false);
+                }
+            });
+        }
     }
 
     @Override
@@ -57,6 +85,10 @@ public class MainActivity extends BaseActivity {
         }
     }
 
+    private boolean isNetworkConnected() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();    }
 
 
 }
