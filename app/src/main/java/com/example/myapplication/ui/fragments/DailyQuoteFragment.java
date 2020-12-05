@@ -27,6 +27,8 @@ public class DailyQuoteFragment extends BaseFragment<FragmentDailyQuoteBinding> 
     @Inject
     QuoteDatabaseService databaseService;
 
+    private boolean ifQuoteIsAlreadySaved = false;
+
     @Inject
     public DailyQuoteFragment() {
     }
@@ -59,11 +61,36 @@ public class DailyQuoteFragment extends BaseFragment<FragmentDailyQuoteBinding> 
     }
 
     @Override
-    public void saveQuote() {
-        Quote quote = new Quote(binding.txtQuote.getText().toString(), binding.txtAuthor.getText().toString());
+    public void onResume() {
+        super.onResume();
+        checkIfCurrentQuoteIsSaved();
+    }
 
-        databaseService.addQuote(quote);
-        binding.btnSave.setImageDrawable(getContext().getDrawable(R.drawable.heart_clicked));
+    @Override
+    public void shareQuote() {
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT,
+                binding.txtQuote.getText().toString() + "\n" + binding.txtAuthor.getText().toString());
+        sendIntent.setType("text/plain");
+
+        Intent shareIntent = Intent.createChooser(sendIntent, null);
+        startActivity(shareIntent);
+    }
+
+    @Override
+    public void saveOrDeleteQuote() {
+        if (ifQuoteIsAlreadySaved) {
+            databaseService.deleteQuoteByQuoteText(binding.txtQuote.getText().toString());
+            ifQuoteIsAlreadySaved = false;
+            binding.btnSave.setImageDrawable(getContext().getDrawable(R.drawable.heart_empty));
+        } else {
+
+            Quote quote = new Quote(binding.txtQuote.getText().toString(), binding.txtAuthor.getText().toString());
+            databaseService.addQuote(quote);
+            binding.btnSave.setImageDrawable(getContext().getDrawable(R.drawable.heart_clicked));
+            ifQuoteIsAlreadySaved = true;
+        }
     }
 
     @Override
@@ -85,26 +112,22 @@ public class DailyQuoteFragment extends BaseFragment<FragmentDailyQuoteBinding> 
         });
     }
 
-    void setOnClickListeners (){
-        binding.btnSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                saveQuote();
-            }
-        });
-        binding.btnShare.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent sendIntent = new Intent();
-                sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT,
-                        binding.txtQuote.getText().toString() + "\n" + binding.txtAuthor.getText().toString());
-                sendIntent.setType("text/plain");
+    void setOnClickListeners() {
+        binding.btnSave.setOnClickListener(v -> presenterListener.onSaveButtonClicked());
+        binding.btnShare.setOnClickListener(v -> presenterListener.onShareButtonClicked());
+    }
 
-                Intent shareIntent = Intent.createChooser(sendIntent, null);
-                startActivity(shareIntent);
-            }
-        });
+    void checkIfCurrentQuoteIsSaved() {
+        databaseService.ifExists(this::setIfQuoteIsAlreadySaved, binding.txtQuote.getText().toString());
+    }
+
+    void setIfQuoteIsAlreadySaved(Boolean ifExists) {
+        if (ifExists) {
+            binding.btnSave.setImageDrawable(getContext().getDrawable(R.drawable.heart_clicked));
+        } else {
+            binding.btnSave.setImageDrawable(getContext().getDrawable(R.drawable.heart_empty));
+        }
+        ifQuoteIsAlreadySaved=ifExists;
     }
 
 }
