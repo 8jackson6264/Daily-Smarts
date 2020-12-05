@@ -10,4 +10,5 @@ public class MyQuotesFragmentPresenter implements MyQuotesFragmentContract.Prese
     public void setViewListener(MyQuotesFragmentContract.ViewListener viewListener) {
         this.viewListener = viewListener;
     }
+
 }

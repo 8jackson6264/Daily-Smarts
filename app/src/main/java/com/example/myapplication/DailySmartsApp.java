@@ -15,8 +15,8 @@ import dagger.android.HasAndroidInjector;
 
 public class DailySmartsApp extends Application implements HasAndroidInjector {
 
-   @Inject
-   DispatchingAndroidInjector<Object> activityDispatchingAndroidInjector;
+    @Inject
+    DispatchingAndroidInjector<Object> activityDispatchingAndroidInjector;
 
     @Override
     public void onCreate() {

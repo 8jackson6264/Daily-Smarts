@@ -9,7 +9,7 @@ import dagger.Provides;
 @Module
 public class DataModule {
     @Provides
-    QuoteDatabaseService provideQuoteService(DailySmartsApp application){
+    QuoteDatabaseService provideQuoteService(DailySmartsApp application) {
         return new QuoteDatabaseService(application);
     }
 }
