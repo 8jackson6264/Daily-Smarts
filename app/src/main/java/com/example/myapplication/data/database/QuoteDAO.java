@@ -22,4 +22,7 @@ public interface QuoteDAO {
 
     @Query("SELECT EXISTS(SELECT 1 FROM quotes WHERE quote_text = :quoteText)")
     boolean checkIfItExist (String quoteText);
+
+    @Query("DELETE FROM quotes WHERE quote_text = :quoteText")
+    void deleteQuoteByQuoteText(String quoteText);
 }

@@ -13,11 +13,16 @@ public class DailyQuoteFragmentPresenter implements DailyQuoteFragmentContract.P
 
     @Override
     public void onSaveButtonClicked() {
-        viewListener.saveQuote();
+        viewListener.saveOrDeleteQuote();
     }
 
     @Override
     public void onRefreshButtonClicked() {
         viewListener.getAndSetNewQuote();
+    }
+
+    @Override
+    public void onShareButtonClicked() {
+        viewListener.shareQuote();
     }
 }
