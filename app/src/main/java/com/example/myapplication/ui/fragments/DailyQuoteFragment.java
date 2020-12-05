@@ -20,6 +20,11 @@ import com.example.myapplication.data.api.Api;
 import com.example.myapplication.data.database.QuoteDatabaseService;
 import com.example.myapplication.databinding.FragmentDailyQuoteBinding;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
 import javax.inject.Inject;
 
 public class DailyQuoteFragment extends BaseFragment<FragmentDailyQuoteBinding> implements DailyQuoteFragmentContract.ViewListener {
@@ -30,6 +35,7 @@ public class DailyQuoteFragment extends BaseFragment<FragmentDailyQuoteBinding> 
     public static final String EngQuoteAuthor = "engQuoteAuthorKey";
     public static final String RusQuoteText = "rusQuoteTextKey";
     public static final String RusQuoteAuthor = "rusQuoteAuthorKey";
+    public static final String LastSingedDate = "lastSingedDateKey";
 
     @Inject
     DailyQuoteFragmentContract.PresenterListener presenterListener;
@@ -50,11 +56,8 @@ public class DailyQuoteFragment extends BaseFragment<FragmentDailyQuoteBinding> 
         presenterListener.setViewListener(this);
         setOnClickListeners();
         sharedPreferences = getActivity().getSharedPreferences(myPreference, Context.MODE_PRIVATE);
-        if (sharedPreferences.contains(EngQuoteText)) {
-            binding.txtQuote.setText(sharedPreferences.getString(EngQuoteText, ""));
-            binding.txtAuthor.setText(sharedPreferences.getString(EngQuoteAuthor, ""));
-        } else getAndSetNewEngQuote();
-
+        DateChecker();
+        getFirstQuote();
     }
 
     @Override
@@ -90,7 +93,7 @@ public class DailyQuoteFragment extends BaseFragment<FragmentDailyQuoteBinding> 
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
         sendIntent.putExtra(Intent.EXTRA_TEXT,
-                binding.txtQuote.getText().toString() + "\n" + binding.txtAuthor.getText().toString());
+                binding.txtQuote.getText().toString() + "\n -" + binding.txtAuthor.getText().toString());
         sendIntent.setType("text/plain");
 
         Intent shareIntent = Intent.createChooser(sendIntent, null);
@@ -199,6 +202,29 @@ public class DailyQuoteFragment extends BaseFragment<FragmentDailyQuoteBinding> 
             binding.btnSave.setImageDrawable(getContext().getDrawable(R.drawable.heart_empty));
         }
         ifQuoteIsAlreadySaved = ifExists;
+    }
+
+    private void getFirstQuote(){
+        if (sharedPreferences.contains(EngQuoteText)) {
+            binding.txtQuote.setText(sharedPreferences.getString(EngQuoteText, ""));
+            binding.txtAuthor.setText(sharedPreferences.getString(EngQuoteAuthor, ""));
+        } else getAndSetNewEngQuote();
+    }
+    private String getDate() {
+        Date c = Calendar.getInstance().getTime();
+        SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
+        return df.format(c);
+    }
+
+    private void DateChecker(){
+        if (sharedPreferences.contains(LastSingedDate)){
+            if (!getDate().equals(sharedPreferences.getString(LastSingedDate, ""))){
+                getAndSetNewQuote();
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString(LastSingedDate, getDate());
+                editor.apply();
+            }
+        }
     }
 
 }

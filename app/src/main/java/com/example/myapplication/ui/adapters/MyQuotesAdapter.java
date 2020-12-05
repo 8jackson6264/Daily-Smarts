@@ -55,7 +55,7 @@ public class MyQuotesAdapter extends RecyclerView.Adapter<MyQuotesAdapter.ViewHo
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
         //if (quote.getQuoteAuthor()==""){quote.setQuoteAuthor("?");}
-        sendIntent.putExtra(Intent.EXTRA_TEXT, quote.getQuoteText() + "\n" + quote.getQuoteAuthor());
+        sendIntent.putExtra(Intent.EXTRA_TEXT, quote.getQuoteText() + "\n -" + quote.getQuoteAuthor());
         sendIntent.setType("text/plain");
 
         Intent shareIntent = Intent.createChooser(sendIntent, null);
